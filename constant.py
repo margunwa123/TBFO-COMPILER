@@ -1,2 +1,3 @@
 MARK = '.'
 COMMA = ','
+NEWLINE = '\n'

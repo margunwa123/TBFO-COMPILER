@@ -1,0 +1,10 @@
+def ADV():
+    if CC == cnst.MARK:
+        end_of_file = True
+        fo.close
+    else:
+        next(CC)
+
+def ignore_blank():
+    while ((CC == ' ' ) and (CC != cnst.MARK)):
+        ADV

@@ -2,53 +2,36 @@ import constant as cnst
 #TOKEN
 fo = open("input.txt", "r")
 content = fo.readlines()
+print('content')
+print(content)
 packed = []
 for line in content:
     packed.append(line.split(' '))
+print('packed : ',packed)
 #content adalah array of words kita
 global packed_list
 packed_list = []
 CKata = iter(content)
-print(content)
-print(packed)
 
 def flatten(l,package):
     for sublist in l:
         for item in sublist:
-            package.append(item)
+            if item != '':
+                package.append(item)
 
 flatten(packed,packed_list)
-"""
-def del_newline(l):
-    asd = l
-    for i in range(len(asd)):
-        if ('\n' in asd[i]):
-            asd[i].rstrip()
-    return asd
-"""
-asd = ['asdsad\n\n']
-if '\n' in asd[0]:
-    print('sadasd')
-
-asdf = del_newline(asd)
-print(asdf)
-
-while ('' in packed_list):
-    packed_list.remove('')
-
 print(packed_list)
 
-"""
-for strink in packed_list:
-    if('\n' in strink):
-        Idx = packed_list.index(strink)
-        print(Idx)
-        print(strink)
-        strink.rstrip("\n")
-        print(strink)
-"""
-print(packed_list)
+def del_newline(li : list):
+    newli = []
+    for i in range (len(li)):
+        newli.append(li[i].rstrip())
+        if '\n' in li[i]:
+            newli.append('\n')
+    return newli
 
+
+packed_list = del_newline(packed_list)
 #grammar = {V,Terminal,Start,Production}
 
 terminal = [ 
@@ -63,12 +46,21 @@ terminal = [
     #  16    17    18     19       20
     "pass", "break", "in", "raise", "(",
     #  21     22      23     24     25
-    ")", ":"
-    #26  27
+    ")", ":","."
+    #26  27  28
     ]
 
-def is_identifier(strink):
-    return (strink in terminal)
+def is_identifier(string : str):
+    return (string in terminal)
 
-if(is_identifier('\n')):
-    print('benar')
+def checkKebenaranFile(li : list):
+    check = True
+    for i in range (len(li)):
+        if not(is_identifier(li[i])):
+            check = False
+    return check
+
+if checkKebenaranFile(packed_list):
+    print('Benar')
+else:
+    print('Gabener')

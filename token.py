@@ -1,4 +1,5 @@
 import constant as cnst
+
 #TOKEN
 fo = open("input.txt", "r")
 content = fo.readlines()
@@ -33,7 +34,7 @@ def del_newline(li : list):
 
 packed_list = del_newline(packed_list)
 #grammar = {V,Terminal,Start,Production}
-
+print(packed_list)
 terminal = [ 
     "!@*#(!@*()!*@)(*!@()#@(A))I)(DKSAN)",
     "False", "class", "is", "return", "None",

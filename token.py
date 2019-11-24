@@ -51,6 +51,9 @@ terminal = [
     #26  27  28
     ]
 
+need_tikom = [
+    "if","elif","else","while","for","def"
+]
 def is_identifier(string : str):
     return (string in terminal)
 

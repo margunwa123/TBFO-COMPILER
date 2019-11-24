@@ -1,2 +1,2 @@
-while for
-    anjai anjai.
+while i == 5:
+a = 5

@@ -7,52 +7,104 @@ def flatten(l : list):
 def cmpr(X:str,Y:str):
     return X == Y
 
-global a#a adalah variabel untuk mengiterasikan file
-
+#a adalah variabel untuk mengiterasikan file
+global kata2 #ini PUSH DOWN AUTOMATA
+EOF = ''
 fo = open('input.txt','r')
 content = fo.read()
 CC = iter(content)
+kata2 = []
 
 def iterate():
+    global a
     a = next(CC)
+    print(a)
 iterate()
 
+def terminal(string : str):
+    return (string in cs.terminal)
+
+def operator(string : str):
+    return (string in cs.operator)
+
+def isEmpty(arr : list):
+    return arr == []
+
 def ignoreBlank():
-    while(a in cs.blanks):
-        iterate()
-
-def ignoreWord():
-    ignoreBlank()
-    while(not(a in cs.blanks)):
-        iterate()
-    ignoreBlank()
-
-def IgnoreTilOperator():
-    ignoreBlank()
-    while(not(a in cs.blanks) and not(a in cs.operator)):
-        iterate()
-    ignoreBlank()
-
-def ignoreLine():
-    while(a != '\n'):
+    global a
+    while(a == cs.blanks or a in cs.marks):
+        if a in cs.marks:
+            kata2.append(a)
         iterate()
 
 def getKata():
+    global a
     Kata = []
     ignoreBlank()
     while True:
-        if (a == ' ') or (len(Kata) >= 12) or (Kata in cs.terminal):
+        if ((a == ' ') or (Kata in cs.terminal) or (Kata in cs.operator) or (a in cs.marks) or (a == cs.NEWLINE)):
             break
         Kata.append(a)
         iterate()
     Kata = flatten(Kata)
     return Kata
 
+def isOperation():
+    global a
+    Kata = getKata()
+    print('dalam isoperation',Kata)
+    if Kata in cs.operator:
+        Kata = getKata()
+        print('test',Kata)
+        if (not(terminal(Kata)) and not(operator(Kata))):
+            return True
+        else:
+            return False
+    elif Kata == ':':
+        return True
 
-def cekValidasiKata(X=str):
-    if(cmpr(X,"if") or cmpr(X,"for") or cmpr(X,"def") or cmpr(X,"while") or cmpr(X,"elif") or cmpr(X,"else")):
-        IgnoreTilOperator()
-         
+def evaluate():
+    global a
+    if (a == EOF):
+        return True
+    Kata = getKata()
+    print('asdasda')
+    if(Kata in cs.terminal):
+        if(Kata == 'while' or Kata == 'def' or Kata == 'if' or Kata =='elif' or Kata =='else'):
+            Kata = getKata()
+            if a == ':':
+                evaluate()
+            else:
+                if Kata in cs.operator:
+                    return False
+                else:
+                    if(isOperation()):
+                        Kata = getKata()
+                        print('kata di isoperat',Kata)
+                        if(Kata == ':'):
+                            evaluate()
+                        else:
+                            return False
+                    else:
+                        return False
+        else:
+            Kata = getKata()
+            print('Kataa di else ',Kata)
+            if Kata in cs.operator:
+                Kata = getKata()
+                if Kata != cs.NEWLINE:
+                    evaluate()
+                else:
+                    return False
+            
+A = evaluate()
+if(A == True):
+    print("STATEMENT BENAR")
+else:
+    print("STATEMENT SALAH")
+            
+    
+
 
 #def run()
 

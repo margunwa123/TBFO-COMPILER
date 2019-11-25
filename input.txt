@@ -1,1 +1,2 @@
-aaabbb
+import word
+import word as word

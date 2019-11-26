@@ -8,3 +8,16 @@ def ADV():
 def ignore_blank():
     while ((CC == ' ' ) and (CC != cnst.MARK)):
         ADV
+
+S' -> DEF_COND S
+S' -> WITH_COND S 
+S' -> WHILE_COND S 
+S' -> WITH_COND S 
+S' -> IF_COND S 
+S' -> IMPORT_COND S 
+S' -> FOR_COND S 
+S' -> RAISE_COND S 
+S' -> ASSIGNMENT S 
+S' -> FROM_COND S 
+S' -> COMMAND S
+S' -> EPSILON

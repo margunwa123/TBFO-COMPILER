@@ -1,2 +1,6 @@
-import word
-import word as word
+if ( x <= 5 ) :
+    x = x + 7 epsilon
+elif ( x > 5 ) : 
+    x = x + 1 epsilon
+else :
+    y = 1

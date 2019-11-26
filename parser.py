@@ -13,6 +13,7 @@ def read_grammar(grammar_file):
     with open(grammar_file) as cfg:
         lines = cfg.readlines()
     a = [x.replace("->", "").split() for x in lines]
+    a = [x for x in a if x]
     return a
 
 def read_input(input_file):
@@ -45,8 +46,7 @@ def read_input(input_file):
 def parse(file_grammar:str,file_input:str):
     grammar = read_grammar(file_grammar)
     inputan = read_input(file_input)
-    length = len(inputan) - 1
-    print("----------GRAMMAR---------\n",grammar)
+    length = len(inputan)
     print("-----------INPUT----------\n",inputan)
     CYK = [[[] for x in range(length - y)] for y in range(length)]
     """
@@ -59,18 +59,22 @@ def parse(file_grammar:str,file_input:str):
     # inputan = list(enumerate(inputan))
     #mengenumerasikan, yaitu masing masing elemen diberi indeksnya
     #bentuk inputan sekarang : [(0,'while'),(1,'('),(2,'word'),....]
-    i = -1
+    j = -1
+    print("length cyk 0 : ",len(CYK[0]))
     for symbol in inputan:
         found = False
     # i melambangkan angkanya, inputan melambangkan elemen
         for rule in grammar:                     # Bentuk Rule = ['S', 'WHILE_COND', 'EPSILON']
+            #print("rule - ",rule[0])
             if f"'{symbol}'" == rule[1]:         # Misalnya ada terminal berbentuk 'symbol' , maka di append
                 if(not(found)):
-                    i += 1
+                    j += 1
                 found = True
                 a = Node(rule[0],symbol)
-                CYK[0][i].append(a)
-                
+                #print(a)
+                #print(j)
+                CYK[0][j].append(a)
+    print(CYK[0])
     for baris in range(2, length + 1): #berapa banyak total baris dikurang satu krn baris ke-0 sudah terisi
     # ini buat looping di parse table nya
         for kolom in range(0, length - baris + 1): #cek jumlah kolom pada satu baris
@@ -113,8 +117,8 @@ def run():
     file_input = input("Masukkan nama file input : ")
     CYK = parse(file_grammar,file_input)
     length = len(CYK)
-    print(f"'{CYK[length-1][0][0]}'")
-    if(f"'{CYK[length-1][0][0]}'" == "'S'"):
+    print(f"'{CYK[length-1][0]}'")
+    if(f"'{CYK[length-1][0]}'" == "'S'"):
         print("Accepted")
     else:
         print("Syntax Error")

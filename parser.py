@@ -9,6 +9,14 @@ def is_number(s):
     except ValueError:
         return False
 
+def delete_duplicate(arr : list):
+    arr2 = []
+    for i in arr:
+        if i not in arr2:
+            arr2.append(i)
+    # print("arr2 : ",arr2)
+    return arr2
+
 def read_grammar(grammar_file):
     with open(grammar_file) as cfg:
         lines = cfg.readlines()
@@ -41,6 +49,7 @@ def read_input(input_file):
     # hasil dalam bentuk array of string:
     # ['while', '(', 'word', '=', 'True', ')', ':', 'continue', 'while', '(', 'word', '=', 'False', ')', ':', 'pass', '-', 'epsilon']
     return hasil
+
 
 
 def parse(file_grammar:str,file_input:str):
@@ -79,9 +88,8 @@ def parse(file_grammar:str,file_input:str):
     # ini buat looping di parse table nya
         for kolom in range(0, length - baris + 1): #cek jumlah kolom pada satu baris
             for index_kiri in range(1, baris): #satu kotak cek berapa kali
-                index_kanan = baris - index_kiri
                 kotak_kiri = CYK[index_kiri - 1][kolom]
-                kotak_kanan = CYK[index_kanan - 1][kolom + index_kiri]
+                kotak_kanan = CYK[baris - index_kiri - 1][kolom + index_kiri]
                 for rule in grammar:   # Bentuk Rule = ['S', 'WHILE_COND', 'EPSILON']
                     left_nodes = [n for n in kotak_kiri if n.symbol == rule[1]]
                     if left_nodes:
@@ -89,7 +97,24 @@ def parse(file_grammar:str,file_input:str):
                         CYK[baris - 1][kolom].extend(
                             [Node(rule[0], left, right) for left in left_nodes for right in right_nodes]
                         )
-    return CYK
+    HASIL = filterCYK(CYK)
+    return HASIL
+
+def filterCYK(CYK: list):
+    newCYK = []
+    for i in range (len(CYK)):
+        newArr1 = []
+        for j in range (len(CYK[i])):
+            newArr = []
+            for k in range (len(CYK[i][j])):
+                if(CYK[i][j][k].symbol not in newArr ):
+                    newArr.append(CYK[i][j][k].symbol)
+            newArr1.append(newArr)
+        newCYK.append(newArr1)
+    return newCYK
+            
+
+
 
 def printCYK(CYK :list):
     for i in range ((len(CYK)-1),-1,-1):
@@ -117,8 +142,8 @@ def run():
     file_input = input("Masukkan nama file input : ")
     CYK = parse(file_grammar,file_input)
     length = len(CYK)
-    print(f"'{CYK[length-1][0]}'")
-    if(f"'{CYK[length-1][0]}'" == "'S'"):
+    print(f"'{CYK[length-1][0][0]}'")
+    if(f"'{CYK[length-1][0][0]}'" == "'S'"):
         print("Accepted")
     else:
         print("Syntax Error")

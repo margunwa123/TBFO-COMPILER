@@ -9,19 +9,13 @@ def is_number(s):
     except ValueError:
         return False
 
-def delete_duplicate(arr : list):
-    arr2 = []
-    for i in arr:
-        if i not in arr2:
-            arr2.append(i)
-    # print("arr2 : ",arr2)
-    return arr2
 
 def read_grammar(grammar_file):
     with open(grammar_file) as cfg:
         lines = cfg.readlines()
     a = [x.replace("->", "").split() for x in lines]
     a = [x for x in a if x]
+    print(a)
     return a
 
 def read_input(input_file):

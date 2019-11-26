@@ -1,1 +1,2 @@
-while ( True ) : continue -
+while ( asd = True ) : continue
+while ( asd = False ) : pass -

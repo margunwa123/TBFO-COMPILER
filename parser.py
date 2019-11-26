@@ -1,10 +1,49 @@
 import os.path
 import argparse
+import constant as cs
+
+def is_number(s):
+    try:
+        float(s)    
+        return True
+    except ValueError:
+        return False
 
 def read_grammar(grammar_file):
     with open(grammar_file) as cfg:
         lines = cfg.readlines()
-    return [x.replace("->", "").split() for x in lines]
+    a = [x.replace("->", "").split() for x in lines]
+    return a
+
+def read_input(input_file):
+    with open(input_file) as content:
+        array = content.readlines()
+        print("----------ARRAY--------  ")
+        print(array)
+        array2 = []
+        hasil = [] #hasil berupa array of word yang bisa berupa terminal ataupun variable
+        for i in range (len(array)):
+            array2.append(array[i].split())
+        for f in array2:
+            for string in f:
+                if string in cs.terminal:
+                    hasil.append(string)
+                else:
+                    if is_number(string):
+                        hasil.append("integer")
+                    else:
+                        hasil.append("word")
+        hasil.append("epsilon")
+    # hasil dalam bentuk array of string:
+    # ['while', '(', 'word', '=', 'True', ')', ':', 'continue', 'while', '(', 'word', '=', 'False', ')', ':', 'pass', '-', 'epsilon']
+    return hasil
+
+
+def parsing(file_grammar:str,file_input:str):
+    grammar = read_grammar(file_grammar)
+    inputan = read_input(file_input)
+    print("----------GRAMMAR---------\n",grammar)
+    print("-----------INPUT----------\n",inputan)
 
 class Node:
     """
@@ -79,8 +118,16 @@ class Parser:
         """
         length = len(self.input)
         print("length is ",length)
-        print("self grammar = " , self.grammar)
-        print("self input = ",self.input)
+        for i in range (length) :
+            word = self.input[i]
+            if word not in cs.terminal:
+                print(word)
+                if(is_number(word)):
+                    self.input[i] = 'int'
+                    print("word = ",self.input[i])
+                else:
+                    self.input[i] = 'word'
+        print("self input : ",self.input)
         # self.parse_table[y][x] is the list of nodes in the x+1 cell of y+1 row in the table.
         # That cell covers the word below it and y more words after.
         self.parse_table = [[[] for x in range(length - y)] for y in range(length)]
@@ -154,3 +201,7 @@ if __name__ == '__main__':
     CYK = Parser(args.grammar, args.sentence)
     CYK.parse()
     CYK.print_tree()
+
+file_grammar = input("Masukkan nama file grammar : ")
+file_input = input("Masukkan nama file input : ")
+parsing(file_grammar,file_input)

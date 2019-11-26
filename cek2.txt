@@ -1,10 +1,12 @@
 S -> NP VP
 PP -> P NP
 NP -> Det N
-NP -> Det N PP
+NP -> Det N_PP
+N_PP -> N PP
 NP -> 'I'
 VP -> V NP
 VP -> VP PP
+AD -> NP A
 Det -> 'an'
 Det -> 'my'
 N -> 'elephant'

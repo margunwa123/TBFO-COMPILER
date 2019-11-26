@@ -1,6 +1,13 @@
-if ( x <= 5 ) :
-    x = x + 7 epsilon
-elif ( x > 5 ) : 
-    x = x + 1 epsilon
-else :
-    y = 1
+def pangkat ( x , y ) :
+    p = x ** y
+    return p
+
+def FPB ( x , y ) :
+    x /= y
+    return x
+
+
+a = pangkat ( x , y )
+b = pangkat ( a , a )
+
+print ( FPB ( a , b ) )

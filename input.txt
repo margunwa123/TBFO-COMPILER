@@ -1,4 +1,4 @@
-def pangkat ( x , y ) :
+def pangkat ( x , y ) 
     p = x ** y
     return p
 

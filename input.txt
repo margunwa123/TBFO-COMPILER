@@ -6,4 +6,6 @@ def fungsi ( f , x ) :
 	fungsi = f * x
 	return fungsi
 
-print ( fungsi ( a , b ) )
+print ( fungsi ( a , b ) )		print ( x )
+	elif ( x >= 6 ) :
+		x += 6

@@ -1,11 +1,7 @@
-def pangkat ( x , y ) 
+def pangkat ( x , y ) :
     p = x ** y
     return p
 
 def fungsi ( f , x ) :
 	fungsi = f * x
 	return fungsi
-
-print ( fungsi ( a , b ) )		print ( x )
-	elif ( x >= 6 ) :
-		x += 6

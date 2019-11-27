@@ -15,7 +15,6 @@ def read_grammar(grammar_file):
         lines = cfg.readlines()
     a = [x.replace("->", "").split() for x in lines]
     a = [x for x in a if x]
-    print(a)
     return a
 
 def read_input(input_file):
@@ -32,8 +31,9 @@ def read_input(input_file):
                     hasil.append("word")
                 elif string in cs.terminal:
                     hasil.append(string)
-                    if string == "'''" or string == '"""':
+                    if string == '"""':
                         hasil.append("komentar")
+                        cek_komentar = True
                 else:
                     if is_number(string):
                         hasil.append("integer")
@@ -77,7 +77,7 @@ def parse(file_grammar:str,file_input:str):
                 #print(a)
                 #print(j)
                 CYK[0][j].append(a)
-    print(CYK[0])
+
     for baris in range(2, length + 1): #berapa banyak total baris dikurang satu krn baris ke-0 sudah terisi
     # ini buat looping di parse table nya
         for kolom in range(0, length - baris + 1): #cek jumlah kolom pada satu baris
@@ -106,8 +106,6 @@ def filterCYK(CYK: list):
             newArr1.append(newArr)
         newCYK.append(newArr1)
     return newCYK
-            
-
 
 
 def printCYK(CYK :list):
@@ -135,10 +133,18 @@ def run():
     file_grammar = input("Masukkan nama file grammar : ")
     file_input = input("Masukkan nama file input : ")
     CYK = parse(file_grammar,file_input)
-    length = len(CYK)
-    print(f"'{CYK[length-1][0][0]}'")
-    if(f"'{CYK[length-1][0][0]}'" == "'S'"):
-        print("Accepted")
+    length = len(CYK) # [['DEF'], ['FUNCTION', 'VARIABLE', 'CONSTANT'] ]
+    # cyk[0] -> ['DEF']
+    # CYK[0][0] -> 'DEF'
+    # CYK[0][0][1] -> 'E'
+    # print("CYK \n",CYK)
+    # for i,N in enumerate(CYK):
+    #     print(i," N ",N)
+    if(CYK[length-1][0] != []):
+        if(f"'{CYK[length-1][0][0]}'" == "'S'"):
+            print("Accepted")
+        else:
+            print("Syntax Error")
     else:
         print("Syntax Error")
     print("================================= CARA MENCETAK CYK ===================================")

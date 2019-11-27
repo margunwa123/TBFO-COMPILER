@@ -2,12 +2,10 @@ def pangkat ( x , y )
     p = x ** y
     return p
 
-def FPB ( x , y ) :
-    x /= y
-    return x
+def fungsi ( f , x ) :
+	fungsi = f * x
+	return fungsi
 
-
-a = pangkat ( x , y )
-b = pangkat ( a , a )
-
-print ( FPB ( a , b ) )
+print ( fungsi ( a , b ) )		print ( x )
+	elif ( x >= 6 ) :
+		x += 6

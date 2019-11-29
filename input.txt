@@ -1,7 +1,3 @@
-def pangkat ( x , y ) :
-    p = x ** y
-    return p
-
-def fungsi ( f , x ) :
-	fungsi = f * x
-	return fungsi
+def pangkat ( rule : str , anjai : int ) -> str :
+    x += 5
+    return a

@@ -1,5 +1,3 @@
-import os.path
-import argparse
 import constant as cs
 
 def is_number(s):
@@ -28,14 +26,19 @@ def read_input(input_file):
         for f in array2:
             for string in f:
                 if cek_komentar:
-                    hasil.append("word")
+                    if string == '"""':
+                        cek_komentar = False
+                        hasil.append(string)
+                    else:
+                        hasil.append("word")
                 elif string in cs.terminal:
                     hasil.append(string)
                     if string == '"""':
-                        hasil.append("komentar")
                         cek_komentar = True
                 else:
-                    if is_number(string):
+                    if string == '->':
+                        hasil.append('arrow_key')
+                    elif is_number(string):
                         hasil.append("integer")
                     else:
                         hasil.append("word")
@@ -128,7 +131,15 @@ class Node:
         Mengembalikan symbol bila dipanggil
         """
         return self.symbol
-
+def printHasil(check : bool):
+    if(check):
+        print("\n\n======oke bro==================================================")
+        print("======================= STRING ACCEPTED =======================")
+        print("===============================================================")
+    else:
+        print("\n\n======ga oke bro===============================================")
+        print("======================= SYNTAX ERROR ==========================")
+        print("===============================================================")
 def run():
     file_grammar = input("Masukkan nama file grammar : ")
     file_input = input("Masukkan nama file input : ")
@@ -141,13 +152,11 @@ def run():
     # for i,N in enumerate(CYK):
     #     print(i," N ",N)
     if(CYK[length-1][0] != []):
-        if(f"'{CYK[length-1][0][0]}'" == "'S'"):
-            print("Accepted")
-        else:
-            print("Syntax Error")
+        check = f"'{CYK[length-1][0][0]}'" == "'S'"
+        printHasil(check)
     else:
-        print("Syntax Error")
-    print("================================= CARA MENCETAK CYK ===================================")
+        printHasil(False)
+    print("\n================================= CARA MENCETAK CYK ===================================")
     printCYK(CYK)
 
 

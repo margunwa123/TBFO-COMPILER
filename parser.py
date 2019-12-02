@@ -9,7 +9,7 @@ def is_number(s):
 
 
 def read_grammar(grammar_file):
-    with open(grammar_file) as cfg:
+    with open(grammar_file,encoding="utf8") as cfg:
         lines = cfg.readlines()
     a = [x.replace("->", "").split() for x in lines]
     a = [x for x in a if x]

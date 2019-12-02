@@ -5,9 +5,9 @@ terminal = [
     "continue", "for", "True", "def", "from",
     "while", "and", "not", "with", "as",
     "elif", "if", "or", "else", "import",
-    "pass", "break", "in", "raise", "(",
+    "pass", "break", "in", "raise", 
     ")", "=", ":", "==","+","-","(",
     "%", ",", "<=", "<", ">", ">=", "**", "*",
     "/", "range", "epsilon", "+=", "-=", "*=",
-    "/=", '"""', "arrow_key", "str", "int", "bool"
+    "/=", '"""', "arrow_key", "str", "int", "bool","exception"
 ]
